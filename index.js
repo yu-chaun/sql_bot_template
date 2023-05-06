@@ -24,7 +24,7 @@ client.on("messageCreate", async (message) => {
 
 client.once("ready", async (client) => {
     console.log(`${client.user.tag} 已上線！`);
-    if (!ValidateDbExists()){
+    if (!ValidateDbExists()) {
         console.log("Failed to connect to database...ABORT");
         return process.exit(1);
     }

@@ -2,31 +2,35 @@ const sqlite3 = require("sqlite3").verbose();
 const path = require("node:path");
 const fs = require("node:fs");
 
-function ValidateDbExists(){
-    return fs.existsSync(path.join(__dirname, "mock.db"))
+function ValidateDbExists() {
+    return fs.existsSync(path.join(__dirname, "mock.db"));
 }
 
-function OpenConnection(){
-    return new sqlite3.Database(path.join(__dirname, "mock.db"), sqlite3.OPEN_READWRITE, (error) => {
-        if (error){
-            return console.error(error);
-        }
-    })
+function OpenConnection() {
+    return new sqlite3.Database(
+        path.join(__dirname, "mock.db"),
+        sqlite3.OPEN_READWRITE,
+        (error) => {
+            if (error) {
+                return console.error(error);
+            }
+        },
+    );
 }
 
-function MigrateJSON(){
-    if (!fs.existsSync("players.json")){
+function MigrateJSON() {
+    if (!fs.existsSync("players.json")) {
         console.log("players.json not found, nothing to migrate!");
     }
     const DataToMigrate = fs.readFileSync("players.json");
     const PlayerList = JSON.parse(DataToMigrate);
     const db = OpenConnection();
-    for (let i = 0; i < PlayerList.length; i++){
+    for (let i = 0; i < PlayerList.length; i++) {
         const { id, money } = PlayerList[i];
         db.serialize(() => {
             let sql = `
             --Do you remember how to insert data into tables?
-            `
+            `;
             //How do we execute this query 🤔
         });
     }
@@ -35,19 +39,18 @@ function MigrateJSON(){
     console.log("Migration completed");
 }
 
-
-function InitDb(){
+function InitDb() {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
         CREATE TABLE IF NOT EXISTS Players(
             --what are the fields here? (hint: check players.json)
         );
-        `
+        `;
         db.serialize(() => {
             db.exec(sql, (error) => {
                 db.close();
-                if (error){
+                if (error) {
                     console.error(error);
                     return resolve(false);
                 }
@@ -59,15 +62,33 @@ function InitDb(){
     });
 }
 
-function ListPlayers(){
+
+function AddPlayer(PlayerId, Value){
+    return new Promise((resolve) => {
+        const db = OpenConnection();
+        let sql = `
+        --Do you still remember how can we insert data into a table?
+        `
+        db.exec(sql, (error) => {
+            if (error){
+                console.error(error);
+                return resolve(false);
+            }
+            return resolve(true);
+        })
+    })
+}
+
+
+function ListPlayers() {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
         --How can we retrieve all data from the table
-        ` 
+        `;
         db.all(sql, (error, Results) => {
             db.close();
-            if (error){
+            if (error) {
                 console.error(error);
                 return resolve(false);
             }
@@ -76,15 +97,15 @@ function ListPlayers(){
     });
 }
 
-function SearchPlayer(){
+function SearchPlayer(PlayerId) {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
         --how can we search for a particular user (hint: I forgot WHERE to put this hint)
-        `
+        `;
         db.all(sql, (error, Results) => {
             db.close();
-            if (error){
+            if (error) {
                 console.error(error);
                 return resolve(false);
             }
@@ -93,14 +114,14 @@ function SearchPlayer(){
     });
 }
 
-function UpdatePlayer(PlayerId, NewVal){
+function UpdatePlayer(PlayerId, NewVal) {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
         --How do we UPDATE a record 🤔
-        `
+        `;
         db.exec(sql, (error) => {
-            if (error){
+            if (error) {
                 console.error(error);
                 return resolve(false);
             }
@@ -112,7 +133,8 @@ function UpdatePlayer(PlayerId, NewVal){
 module.exports = {
     ValidateDbExists: ValidateDbExists,
     InitDb: InitDb,
+    AddPlayer: AddPlayer,
     ListPlayers: ListPlayers,
     SearchPlayer: SearchPlayer,
     UpdatePlayer: UpdatePlayer,
-}
+};
