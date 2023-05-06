@@ -9,6 +9,9 @@ module.exports = {
 
     async execute(client, interaction) {
         const PlayerList = await ListPlayers();
+        if (!PlayerList){
+            return await interaction.reply("Error occured while fetching player list...Try again later!");
+        }
         let ReplyString = "";
         for (let i = 0; i < PlayerList.length; i++) {
             const { id, money } = PlayerList[i];

@@ -14,7 +14,9 @@ module.exports = {
             return await interaction.reply("Player id not provided");
         }
         const ReturnData = await SearchPlayer(PlayerId);
-        console.log(ReturnData);
+        if (!ReturnData){
+            return await interaction.reply(`Failed to find player with id ${PlayerId}`);
+        }
         let ReplyString = "";
         for (let i = 0; i < ReturnData.length; i++) {
             const { id, money } = ReturnData[i];

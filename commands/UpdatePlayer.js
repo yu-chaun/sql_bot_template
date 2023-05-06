@@ -18,11 +18,11 @@ module.exports = {
     async execute(client, interaction) {
         const PlayerId = interaction.options.getString("id") ?? "";
         const NewVal = interaction.options.getString("value") ?? "";
-        const ReturnData = await UpdatePlayer(PlayerId, NewVal);
+        const UpdateStatus = await UpdatePlayer(PlayerId, NewVal);
         if (PlayerId === "" || NewVal === "" || !Number(NewVal)) {
             return await interaction.reply("Missing arguments");
         }
-        console.log(ReturnData);
-        return await interaction.reply("Works");
+        const Status = UpdateStatus ? "Successfully" : "Failed to";
+        return await interaction.reply(`${Status} updated ${PlayerId}'s money to ${NewVal}`);
     },
 };
