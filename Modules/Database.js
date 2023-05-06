@@ -29,9 +29,9 @@ function MigrateJSON() {
         const { id, money } = PlayerList[i];
         db.serialize(() => {
             let sql = `
-            --Do you remember how to insert data into tables?
+            --你還記得我們怎樣才能把資料 INSERT 進資料表嗎？
             `;
-            //How do we execute this query 🤔
+            //怎樣才能執行 SQL指令 🤔
         });
     }
     db.close();
@@ -44,7 +44,7 @@ function InitDb() {
         const db = OpenConnection();
         let sql = `
         CREATE TABLE IF NOT EXISTS Players(
-            --what are the fields here? (hint: check players.json)
+            --我們的資料表需要什麽欄位呢 🤔 (提示: 看看 players.json)
         );
         `;
         db.serialize(() => {
@@ -67,7 +67,7 @@ function AddPlayer(PlayerId, Value){
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
-        --Do you still remember how can we insert data into a table?
+        --應該還記得怎樣 INSERT 資料進去吧 🥺
         `
         db.exec(sql, (error) => {
             if (error){
@@ -84,7 +84,7 @@ function ListPlayers() {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
-        --How can we retrieve all data from the table
+        --我們怎樣才能把叫 Players 的資料表上的資料拿出來
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -101,7 +101,7 @@ function SearchPlayer(PlayerId) {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
-        --how can we search for a particular user (hint: I forgot WHERE to put this hint)
+        --欸欸怎樣才能找到一個某特定的記錄 (提示: I forgot WHERE is my Chinese keyboard)
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -118,7 +118,7 @@ function UpdatePlayer(PlayerId, NewVal) {
     return new Promise((resolve) => {
         const db = OpenConnection();
         let sql = `
-        --How do we UPDATE a record 🤔
+        --怎樣才能 UPDATE 一個記錄 🤔
         `;
         db.exec(sql, (error) => {
             if (error) {
