@@ -18,23 +18,22 @@ module.exports = {
         .then((Result) => {
             let FinalVal = 0;
             if (Result.length == 0){
-                AddPlayer(PlayerId, StarterValue + earnings)
+                FinalVal = StarterValue + earnings;
+                AddPlayer(PlayerId, FinalVal)
                 .then((Success) => {
                     if (!Success){
                         console.error(`Failed to add ${PlayerId} to DB`);
                     }
                 });
-                FinalVal = StarterValue + earnings;
             } else {
-                console.log(Result)
                 const {id, money} = Result[0];
-                UpdatePlayer(PlayerId, money + earnings)
+                FinalVal = money + earnings;
+                UpdatePlayer(PlayerId, FinalVal)
                 .then((Success) => {
                     if (!Success){
                         console.error(`Failed to update ${PlayerId}`);
                     }
-                });
-                FinalVal = money + earnings;
+                });1    
             }
             const diceEmbed = new EmbedBuilder()
                     .setColor("#5865F2")

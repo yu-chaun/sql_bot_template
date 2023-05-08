@@ -30,9 +30,10 @@ function MigrateJSON() {
         db.serialize(() => {
             let sql = `
             --你還記得我們怎樣才能把資料 INSERT 進資料表嗎？
-            INSERT INTO Players (id, money) VALUES ("${id}", ${money})
             `;
-            //怎樣才能執行 SQL指令 🤔
+            db.exec(sql, (error) => {
+                if (error) console.error(error);
+            });
         });
     }
     db.close();
@@ -46,8 +47,7 @@ function InitDb() {
         let sql = `
         CREATE TABLE IF NOT EXISTS Players(
             --我們的資料表需要什麽欄位呢 🤔 (提示: 看看 players.json)
-            id TEXT PRIMARY KEY,
-            money INTEGER
+            --填 CREATE TABLE 裏面的東西就可以了
         );
         `;
         db.serialize(() => {
@@ -71,7 +71,6 @@ function AddPlayer(PlayerId, Value){
         const db = OpenConnection();
         let sql = `
         --應該還記得怎樣 INSERT 資料進去吧 🥺
-        INSERT INTO Players (id, money) VALUES ("${PlayerId}", ${Value})
         `
         db.exec(sql, (error) => {
             if (error){
@@ -89,7 +88,6 @@ function ListPlayers() {
         const db = OpenConnection();
         let sql = `
         --我們怎樣才能把叫 Players 的資料表上的資料拿出來
-        SELECT * FROM Players
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -107,7 +105,6 @@ function SearchPlayer(PlayerId) {
         const db = OpenConnection();
         let sql = `
         --欸欸怎樣才能找到一個某特定的記錄 (提示: I forgot WHERE is my Chinese keyboard)
-        SELECT * FROM Players WHERE id = "${PlayerId}"
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -125,7 +122,6 @@ function UpdatePlayer(PlayerId, NewVal) {
         const db = OpenConnection();
         let sql = `
         --怎樣才能 UPDATE 一個記錄 🤔
-        UPDATE Players SET money = ${NewVal} WHERE id = "${PlayerId}";
         `;
         db.exec(sql, (error) => {
             if (error) {
