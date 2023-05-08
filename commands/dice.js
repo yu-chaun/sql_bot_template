@@ -16,9 +16,8 @@ module.exports = {
         const PlayerId = interaction.user.id;
         SearchPlayer(PlayerId)
         .then((Result) => {
-            const { _, Money } = Result[0];
             let FinalVal = 0;
-            if (!Money){
+            if (Result.length == 0){
                 AddPlayer(PlayerId, StarterValue + earnings)
                 .then((Success) => {
                     if (!Success){
@@ -27,13 +26,15 @@ module.exports = {
                 });
                 FinalVal = StarterValue + earnings;
             } else {
-                UpdatePlayer(PlayerId, Money + earnings)
+                console.log(Result)
+                const {id, money} = Result[0];
+                UpdatePlayer(PlayerId, money + earnings)
                 .then((Success) => {
                     if (!Success){
                         console.error(`Failed to update ${PlayerId}`);
                     }
                 });
-                FinalVal = Money + earnings;
+                FinalVal = money + earnings;
             }
             const diceEmbed = new EmbedBuilder()
                     .setColor("#5865F2")
