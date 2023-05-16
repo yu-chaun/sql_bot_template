@@ -28,8 +28,13 @@ function MigrateJSON() {
     for (let i = 0; i < PlayerList.length; i++) {
         const { id, money } = PlayerList[i];
         db.serialize(() => {
+            /*
+            TODO:
+            你還記得我們怎樣才能把資料 INSERT 進資料表嗎？
+            完成下面的 INSERT 指令吧！
+            */
             let sql = `
-            --你還記得我們怎樣才能把資料 INSERT 進資料表嗎？
+            --Query Starts Here
             `;
             db.exec(sql, (error) => {
                 if (error) console.error(error);
@@ -44,10 +49,14 @@ function MigrateJSON() {
 function InitDb() {
     return new Promise((resolve) => {
         const db = OpenConnection();
+        /*
+        TODO:
+        我們的資料表需要什麽欄位呢 🤔 (提示: 看看 players.json)
+        填 CREATE TABLE 裏面的東西就可以了 ( eg: Name TEXT Primary Key ) 這個只是例子哦
+        */
         let sql = `
         CREATE TABLE IF NOT EXISTS Players(
-            --我們的資料表需要什麽欄位呢 🤔 (提示: 看看 players.json)
-            --填 CREATE TABLE 裏面的東西就可以了
+            --Input the fields here
         );
         `;
         db.serialize(() => {
@@ -69,8 +78,12 @@ function InitDb() {
 function AddPlayer(PlayerId, Value){
     return new Promise((resolve) => {
         const db = OpenConnection();
+        /*
+        TODO:
+        應該還記得怎樣 INSERT 資料進去吧 🥺
+        */
         let sql = `
-        --應該還記得怎樣 INSERT 資料進去吧 🥺
+        --> INSERT QUERY HERE...
         `
         db.exec(sql, (error) => {
             if (error){
@@ -86,8 +99,14 @@ function AddPlayer(PlayerId, Value){
 function ListPlayers() {
     return new Promise((resolve) => {
         const db = OpenConnection();
+        /*
+        TODO:
+        我們怎樣才能把叫 Players 的資料表上的資料拿出來
+
+        小朋友才做選擇，我全部都要
+        */
         let sql = `
-        --我們怎樣才能把叫 Players 的資料表上的資料拿出來
+        --Thou shall not pass!
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -103,8 +122,12 @@ function ListPlayers() {
 function SearchPlayer(PlayerId) {
     return new Promise((resolve) => {
         const db = OpenConnection();
+        /*
+        TODO:
+        欸欸怎樣才能找到一個某特定的記錄 (wait WHERE am I...🤔)
+        */
         let sql = `
-        --欸欸怎樣才能找到一個某特定的記錄 (提示: I forgot WHERE is my Chinese keyboard)
+        --I spy with my little eyes, a player record with the id "12345" (remember to replace me)
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -120,8 +143,12 @@ function SearchPlayer(PlayerId) {
 function UpdatePlayer(PlayerId, NewVal) {
     return new Promise((resolve) => {
         const db = OpenConnection();
+        /*
+        TODO:
+        怎樣才能 UPDATE 一個記錄 🤔
+        */
         let sql = `
-        --怎樣才能 UPDATE 一個記錄 🤔
+        --REPLACE ME WITH THY QUERY!
         `;
         db.exec(sql, (error) => {
             if (error) {
