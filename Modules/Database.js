@@ -7,7 +7,7 @@ function ValidateDbExists() {
 }
 
 function OpenConnection() {
-    return new sqlite3.Database(
+    return new sqlie3.Database(
         path.join(__dirname, "mock.db"),
         sqlite3.OPEN_READWRITE,
         (error) => {
