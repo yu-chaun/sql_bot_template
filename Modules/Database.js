@@ -34,7 +34,8 @@ function MigrateJSON() {
             完成下面的 INSERT 指令吧！
             */
             let sql = `
-            --Query Starts Here
+            INSERT INTO Players (id, money)
+            VALUES ("${id}", ${money});
             `;
             db.exec(sql, (error) => {
                 if (error) console.error(error);
@@ -56,7 +57,8 @@ function InitDb() {
         */
         let sql = `
         CREATE TABLE IF NOT EXISTS Players(
-            --Input the fields here
+            id TEXT PRIMARY KEY,
+            money INTEGER
         );
         `;
         db.serialize(() => {
@@ -83,7 +85,8 @@ function AddPlayer(PlayerId, Value){
         應該還記得怎樣 INSERT 資料進去吧 🥺
         */
         let sql = `
-        --> INSERT QUERY HERE...
+        INSERT INTO Players (id, money)
+        VALUES ("${PlayerId}", ${Value});
         `
         db.exec(sql, (error) => {
             if (error){
@@ -106,7 +109,7 @@ function ListPlayers() {
         小朋友才做選擇，我全部都要
         */
         let sql = `
-        --Thou shall not pass!
+        SELECT * FROM Players;
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -127,7 +130,7 @@ function SearchPlayer(PlayerId) {
         欸欸怎樣才能找到一個某特定的記錄 (wait WHERE am I...🤔)
         */
         let sql = `
-        --I spy with my little eyes, a player record with the id "12345" (remember to replace me)
+        SELECT * FROM Players WHERE id = "${PlayerId}";
         `;
         db.all(sql, (error, Results) => {
             db.close();
@@ -148,7 +151,7 @@ function UpdatePlayer(PlayerId, NewVal) {
         怎樣才能 UPDATE 一個記錄 🤔
         */
         let sql = `
-        --REPLACE ME WITH THY QUERY!
+        UPDATE Players SET money = ${NewVal} WHERE id = "${PlayerId}";
         `;
         db.exec(sql, (error) => {
             if (error) {
